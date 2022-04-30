@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="contabilidadModelStoreContainer" CdmEntityContainer="contabilidadEntities">
+    <EntitySetMapping Name="Catalogo_de_Cuentas">
+      <EntityTypeMapping TypeName="contabilidadModel.Catalogo_de_Cuentas">
+        <MappingFragment StoreEntitySet="Catalogo_de_Cuentas">
+          <ScalarProperty Name="cod_catalogo" ColumnName="cod_catalogo" />
+          <ScalarProperty Name="Nombre_de_cataCuenta" ColumnName="Nombre_de_cataCuenta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Cod_tipocu" ColumnName="Cod_tipocu" />
+          <ScalarProperty Name="Transacciones" ColumnName="Transacciones" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Movimiento_Contable">
+      <EntityTypeMapping TypeName="contabilidadModel.Movimiento_Contable">
+        <MappingFragment StoreEntitySet="Movimiento_Contable">
+          <ScalarProperty Name="Cod_mov" ColumnName="Cod_mov" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="cod_catalogo" ColumnName="cod_catalogo" />
+          <ScalarProperty Name="Tipo_movimiento" ColumnName="Tipo_movimiento" />
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="Debe" ColumnName="Debe" />
+          <ScalarProperty Name="Haber" ColumnName="Haber" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipo_de_Cuenta">
+      <EntityTypeMapping TypeName="contabilidadModel.Tipo_de_Cuenta">
+        <MappingFragment StoreEntitySet="Tipo_de_Cuenta">
+          <ScalarProperty Name="Cod_tipocu" ColumnName="Cod_tipocu" />
+          <ScalarProperty Name="Nombre_de_Cuenta" ColumnName="Nombre_de_Cuenta" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Origen" ColumnName="Origen" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

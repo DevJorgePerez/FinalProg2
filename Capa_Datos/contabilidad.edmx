@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="contabilidadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Catalogo_de_Cuentas">
+          <Key>
+            <PropertyRef Name="cod_catalogo" />
+          </Key>
+          <Property Name="cod_catalogo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_de_cataCuenta" Type="varchar" MaxLength="200" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Cod_tipocu" Type="int" Nullable="false" />
+          <Property Name="Transacciones" Type="varchar" MaxLength="2" />
+          <Property Name="Nivel" Type="int" />
+          <Property Name="Balance" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Movimiento_Contable">
+          <Key>
+            <PropertyRef Name="Cod_mov" />
+          </Key>
+          <Property Name="Cod_mov" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="cod_catalogo" Type="int" Nullable="false" />
+          <Property Name="Tipo_movimiento" Type="varchar" MaxLength="10" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="Debe" Type="int" />
+          <Property Name="Haber" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tipo_de_Cuenta">
+          <Key>
+            <PropertyRef Name="Cod_tipocu" />
+          </Key>
+          <Property Name="Cod_tipocu" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_de_Cuenta" Type="varchar" MaxLength="200" />
+          <Property Name="Descripcion" Type="text" />
+          <Property Name="Origen" Type="varchar" MaxLength="10" />
+          <Property Name="Estado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="fk_CatalogoCuenta">
+          <End Role="Catalogo_de_Cuentas" Type="Self.Catalogo_de_Cuentas" Multiplicity="1" />
+          <End Role="Movimiento_Contable" Type="Self.Movimiento_Contable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogo_de_Cuentas">
+              <PropertyRef Name="cod_catalogo" />
+            </Principal>
+            <Dependent Role="Movimiento_Contable">
+              <PropertyRef Name="cod_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TipoCuenta">
+          <End Role="Tipo_de_Cuenta" Type="Self.Tipo_de_Cuenta" Multiplicity="1" />
+          <End Role="Catalogo_de_Cuentas" Type="Self.Catalogo_de_Cuentas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_de_Cuenta">
+              <PropertyRef Name="Cod_tipocu" />
+            </Principal>
+            <Dependent Role="Catalogo_de_Cuentas">
+              <PropertyRef Name="Cod_tipocu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="contabilidadModelStoreContainer">
+          <EntitySet Name="Catalogo_de_Cuentas" EntityType="Self.Catalogo_de_Cuentas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movimiento_Contable" EntityType="Self.Movimiento_Contable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_de_Cuenta" EntityType="Self.Tipo_de_Cuenta" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_CatalogoCuenta" Association="Self.fk_CatalogoCuenta">
+            <End Role="Catalogo_de_Cuentas" EntitySet="Catalogo_de_Cuentas" />
+            <End Role="Movimiento_Contable" EntitySet="Movimiento_Contable" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TipoCuenta" Association="Self.fk_TipoCuenta">
+            <End Role="Tipo_de_Cuenta" EntitySet="Tipo_de_Cuenta" />
+            <End Role="Catalogo_de_Cuentas" EntitySet="Catalogo_de_Cuentas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="contabilidadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Catalogo_de_Cuentas">
+          <Key>
+            <PropertyRef Name="cod_catalogo" />
+          </Key>
+          <Property Name="cod_catalogo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_de_cataCuenta" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Cod_tipocu" Type="Int32" Nullable="false" />
+          <Property Name="Transacciones" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Nivel" Type="Int32" />
+          <Property Name="Balance" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Movimiento_Contable" Relationship="Self.fk_CatalogoCuenta" FromRole="Catalogo_de_Cuentas" ToRole="Movimiento_Contable" />
+          <NavigationProperty Name="Tipo_de_Cuenta" Relationship="Self.fk_TipoCuenta" FromRole="Catalogo_de_Cuentas" ToRole="Tipo_de_Cuenta" />
+        </EntityType>
+        <EntityType Name="Movimiento_Contable">
+          <Key>
+            <PropertyRef Name="Cod_mov" />
+          </Key>
+          <Property Name="Cod_mov" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cod_catalogo" Type="Int32" Nullable="false" />
+          <Property Name="Tipo_movimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="Debe" Type="Int32" />
+          <Property Name="Haber" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Catalogo_de_Cuentas" Relationship="Self.fk_CatalogoCuenta" FromRole="Movimiento_Contable" ToRole="Catalogo_de_Cuentas" />
+        </EntityType>
+        <EntityType Name="Tipo_de_Cuenta">
+          <Key>
+            <PropertyRef Name="Cod_tipocu" />
+          </Key>
+          <Property Name="Cod_tipocu" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_de_Cuenta" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Origen" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Catalogo_de_Cuentas" Relationship="Self.fk_TipoCuenta" FromRole="Tipo_de_Cuenta" ToRole="Catalogo_de_Cuentas" />
+        </EntityType>
+        <Association Name="fk_CatalogoCuenta">
+          <End Role="Catalogo_de_Cuentas" Type="Self.Catalogo_de_Cuentas" Multiplicity="1" />
+          <End Role="Movimiento_Contable" Type="Self.Movimiento_Contable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogo_de_Cuentas">
+              <PropertyRef Name="cod_catalogo" />
+            </Principal>
+            <Dependent Role="Movimiento_Contable">
+              <PropertyRef Name="cod_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TipoCuenta">
+          <End Role="Tipo_de_Cuenta" Type="Self.Tipo_de_Cuenta" Multiplicity="1" />
+          <End Role="Catalogo_de_Cuentas" Type="Self.Catalogo_de_Cuentas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_de_Cuenta">
+              <PropertyRef Name="Cod_tipocu" />
+            </Principal>
+            <Dependent Role="Catalogo_de_Cuentas">
+              <PropertyRef Name="Cod_tipocu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="contabilidadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Catalogo_de_Cuentas" EntityType="Self.Catalogo_de_Cuentas" />
+          <EntitySet Name="Movimiento_Contable" EntityType="Self.Movimiento_Contable" />
+          <EntitySet Name="Tipo_de_Cuenta" EntityType="Self.Tipo_de_Cuenta" />
+          <AssociationSet Name="fk_CatalogoCuenta" Association="Self.fk_CatalogoCuenta">
+            <End Role="Catalogo_de_Cuentas" EntitySet="Catalogo_de_Cuentas" />
+            <End Role="Movimiento_Contable" EntitySet="Movimiento_Contable" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TipoCuenta" Association="Self.fk_TipoCuenta">
+            <End Role="Tipo_de_Cuenta" EntitySet="Tipo_de_Cuenta" />
+            <End Role="Catalogo_de_Cuentas" EntitySet="Catalogo_de_Cuentas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="contabilidadModelStoreContainer" CdmEntityContainer="contabilidadEntities">
+          <EntitySetMapping Name="Catalogo_de_Cuentas">
+            <EntityTypeMapping TypeName="contabilidadModel.Catalogo_de_Cuentas">
+              <MappingFragment StoreEntitySet="Catalogo_de_Cuentas">
+                <ScalarProperty Name="cod_catalogo" ColumnName="cod_catalogo" />
+                <ScalarProperty Name="Nombre_de_cataCuenta" ColumnName="Nombre_de_cataCuenta" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Cod_tipocu" ColumnName="Cod_tipocu" />
+                <ScalarProperty Name="Transacciones" ColumnName="Transacciones" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movimiento_Contable">
+            <EntityTypeMapping TypeName="contabilidadModel.Movimiento_Contable">
+              <MappingFragment StoreEntitySet="Movimiento_Contable">
+                <ScalarProperty Name="Cod_mov" ColumnName="Cod_mov" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="cod_catalogo" ColumnName="cod_catalogo" />
+                <ScalarProperty Name="Tipo_movimiento" ColumnName="Tipo_movimiento" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="Debe" ColumnName="Debe" />
+                <ScalarProperty Name="Haber" ColumnName="Haber" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_de_Cuenta">
+            <EntityTypeMapping TypeName="contabilidadModel.Tipo_de_Cuenta">
+              <MappingFragment StoreEntitySet="Tipo_de_Cuenta">
+                <ScalarProperty Name="Cod_tipocu" ColumnName="Cod_tipocu" />
+                <ScalarProperty Name="Nombre_de_Cuenta" ColumnName="Nombre_de_Cuenta" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
